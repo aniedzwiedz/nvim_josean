@@ -34,6 +34,8 @@ return packer.startup(function(use)
 	use("nvim-lua/plenary.nvim") -- lua functions that many plugins use
 
 	use("bluz71/vim-nightfly-guicolors") -- preferred colorscheme
+	use("NvChad/nvim-colorizer.lua")
+	-- use("kdheepak/lazygit.nvim")
 
 	use("christoomey/vim-tmux-navigator") -- tmux & split window navigation
 
@@ -57,7 +59,17 @@ return packer.startup(function(use)
 
 	-- fuzzy finding w/ telescope
 	use({ "nvim-telescope/telescope-fzf-native.nvim", run = "make" }) -- dependency for better sorting performance
-	use({ "nvim-telescope/telescope.nvim", branch = "0.1.x" }) -- fuzzy finder
+	-- use({ "nvim-telescope/telescope.nvim", branch = "0.1.x" }) -- fuzzy finder
+	use({
+		"nvim-telescope/telescope.nvim",
+		requires = { { "nvim-lua/plenary.nvim" }, { "kdheepak/lazygit.nvim" } },
+		config = function()
+			require("telescope").load_extension("lazygit")
+		end,
+	})
+
+	-- https://github.com/voldikss/vim-floaterm
+	use("voldikss/vim-floaterm")
 
 	-- autocompletion
 	use("hrsh7th/nvim-cmp") -- completion plugin
